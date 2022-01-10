@@ -13,8 +13,11 @@ app.use(express.static('public'))
 
 // routes setting
 app.get('/', (req, res ) => {
-  res.render('index')
-  // res.send('This is a restaurant list.')
+  res.render('index', { restaurant: restaurantList['results'] })
+})
+
+app.get('/restaurants/:restaurantId', (req, res ) => {
+  res.render('show')
 })
 
 // start and listen on the Express server
