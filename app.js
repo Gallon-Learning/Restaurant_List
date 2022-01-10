@@ -21,6 +21,18 @@ app.get('/restaurants/:restaurant_id', (req, res ) => {
   res.render('show', { restaurant: restaurant })
 })
 
+app.get('/search', (req, res) => {
+  // 不知為何，使用redirect會發生 [nodemon] app crashed - waiting for file changes before starting...
+  // if (!req.query.keyword) {
+  //   res.redirect('/')
+  // }
+  const keyword = req.query.keyword.trim()
+  const restaurant = restaurantList.results.filter(movie => {
+    return (movie.name.toLowerCase().includes(keyword.toLowerCase()) | movie.category.toLowerCase().includes(keyword.toLowerCase()))
+  })
+  res.render('index', { restaurant: restaurant, keyword: keyword })
+})
+
 // start and listen on the Express server
 app.listen(port, () => {
   console.log(`Express is listening on localhost:${port}`)
