@@ -1,9 +1,26 @@
 // require packages used in the project
 const express = require('express')
+const mongoose = require('mongoose')
+const exphbs = require('express-handlebars')
+
+const Restaurant = require('./models/restaurant')
+
 const app = express()
 const port = 3000
-const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
+
+mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true }) // 設定連線到 mongoDB
+
+// 取得資料庫連線狀態
+const db = mongoose.connection
+// 連線異常
+db.on('error', () => {
+  console.log('mongodb error!')
+})
+// 連線成功
+db.once('open', () => {
+  console.log('mongodb connected!')
+})
+
 
 // setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -13,12 +30,17 @@ app.use(express.static('public'))
 
 // routes setting
 app.get('/', (req, res ) => {
-  res.render('index', { restaurant: restaurantList.results })
+  Restaurant.find()
+    .lean()
+    .then((restaurantsData) => res.render('index', {restaurantsData}))
 })
 
-app.get('/restaurants/:restaurant_id', (req, res ) => {
-  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant: restaurant })
+app.get('/restaurants/:id', (req, res ) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurantsData) => res.render('show', { restaurantsData }))
+    .catch(error => console.log(error))
 })
 
 app.get('/search', (req, res) => {
@@ -26,10 +48,17 @@ app.get('/search', (req, res) => {
     return res.redirect('/')
   }
   const keyword = req.query.keyword.trim()
-  const restaurant = restaurantList.results.filter(movie => {
-    return (movie.name.toLowerCase().includes(keyword.toLowerCase()) | movie.category.toLowerCase().includes(keyword.toLowerCase()))
-  })
-  res.render('index', { restaurant: restaurant, keyword: keyword })
+  Restaurant.find({})
+    .lean()
+    .then(restaurantsData => {
+      const filterRestaurantsData = restaurantsData.filter(
+        data =>
+          data.name.toLowerCase().includes(keyword.toLowerCase()) ||
+          data.category.toLowerCase().includes(keyword.toLowerCase())
+      )
+      res.render("index", { restaurantsData: filterRestaurantsData, keyword })
+    })
+    .catch(err => console.log(err))
 })
 
 // start and listen on the Express server
