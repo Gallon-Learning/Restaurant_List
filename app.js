@@ -22,10 +22,9 @@ app.get('/restaurants/:restaurant_id', (req, res ) => {
 })
 
 app.get('/search', (req, res) => {
-  // 不知為何，使用redirect會發生 [nodemon] app crashed - waiting for file changes before starting...
-  // if (!req.query.keyword) {
-  //   res.redirect('/')
-  // }
+  if (!req.query.keyword) {
+    return res.redirect('/')
+  }
   const keyword = req.query.keyword.trim()
   const restaurant = restaurantList.results.filter(movie => {
     return (movie.name.toLowerCase().includes(keyword.toLowerCase()) | movie.category.toLowerCase().includes(keyword.toLowerCase()))
