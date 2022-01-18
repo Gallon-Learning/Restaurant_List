@@ -38,7 +38,9 @@
             <div class="d-grid d-sm-flex justify-content-sm-end">
               <a class="btn btn-secondary btn-sm mr-2" role="button" href="/restaurants/{{this._id}}/edit">Edit</a>
               <a class="btn btn-secondary btn-sm mr-2" role="button" href="/restaurants/{{this._id}}">Detail</a>
-              <a class="btn btn-secondary btn-sm mr-2" role="button">Delete</a>
+              <form action="./restaurants/{{ this._id }}/delete" method="POST" style="display: inline;">
+                <button class="btn btn-secondary btn-sm mr-2">Delete</button >
+              </form>
             </div>
           </div>
         </div>

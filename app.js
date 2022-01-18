@@ -65,18 +65,18 @@ app.get('/restaurants/new', (req, res) => {
 })
 
 app.post('/restaurants', (req, res) => {
-  const restaurant = req.body
+  const restaurantNew = req.body
   return Restaurant.create({
-      'id': restaurant.id,
-      'name': restaurant.name,
-      'name_en': restaurant.englishName,
-      'category': restaurant.category,
-      'image': restaurant.image,
-      'location': restaurant.location,
-      'phone': restaurant.phone,
-      'google_map': restaurant.googleMap,
-      'rating': restaurant.rating,
-      'description': restaurant.description
+      'id': restaurantNew.id,
+      'name': restaurantNew.name,
+      'name_en': restaurantNew.englishName,
+      'category': restaurantNew.category,
+      'image': restaurantNew.image,
+      'location': restaurantNew.location,
+      'phone': restaurantNew.phone,
+      'google_map': restaurantNew.googleMap,
+      'rating': restaurantNew.rating,
+      'description': restaurantNew.description
   })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
@@ -118,6 +118,15 @@ app.post('/restaurants/:id/edit', (req, res) => {
       return restaurant.save()
     })
     .then(()=> res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
+})
+
+// 使用者可以刪除一家餐廳
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
