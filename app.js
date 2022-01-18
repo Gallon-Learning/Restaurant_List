@@ -33,12 +33,14 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // routes setting
+// 使用者可以瀏覽全部所有餐廳
 app.get('/', (req, res ) => {
   Restaurant.find()
     .lean()
     .then((restaurantsData) => res.render('index', {restaurantsData}))
 })
 
+// 使用者可以搜尋餐廳
 app.get('/search', (req, res) => {
   if (!req.query.keyword) {
     return res.redirect('/')
@@ -57,6 +59,7 @@ app.get('/search', (req, res) => {
     .catch(err => console.log(err))
 })
 
+// 使用者可以新增一家餐廳
 app.get('/restaurants/new', (req, res) => {
   res.render("new")
 })
@@ -74,16 +77,47 @@ app.post('/restaurants', (req, res) => {
       'google_map': restaurant.googleMap,
       'rating': restaurant.rating,
       'description': restaurant.description
-  })     // 存入資料庫
-    .then(() => res.redirect('/')) // 新增完成後導回首頁
+  })
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
+// 使用者可以瀏覽一家餐廳的詳細資訊
 app.get('/restaurants/:id', (req, res ) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
     .then((restaurantsData) => res.render('show', { restaurantsData }))
+    .catch(error => console.log(error))
+})
+
+// 使用者可以修改一家餐廳的資訊
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then((restaurantsData) => res.render('edit', { restaurantsData }))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const restaurantEdit = req.body
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant.id = restaurantEdit.id
+      restaurant.name = restaurantEdit.name
+      restaurant.name_en = restaurantEdit.englishName
+      restaurant.category = restaurantEdit.category
+      restaurant.image = restaurantEdit.image
+      restaurant.location = restaurantEdit.location
+      restaurant.phone = restaurantEdit.phone
+      restaurant.google_map = restaurantEdit.googleMap
+      restaurant.rating = restaurantEdit.rating
+      restaurant.description = restaurantEdit.description
+      return restaurant.save()
+    })
+    .then(()=> res.redirect(`/restaurants/${id}`))
     .catch(error => console.log(error))
 })
 

@@ -4,15 +4,15 @@
     <div class="col-12 col-lg-10 col-xl-8 mx-auto">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Add A New Restaurant <i class="fas fa-plus-circle fa-sm"></i></h5>
+          <h5 class="card-title">Edit A Restaurant <i class="fas fa-plus-circle fa-sm"></i></h5>
           <hr>
-          <form method="POST" action="/restaurants">
+          <form method="POST" action="./edit">
             <div class="row mb-3 g-2">
               <label for="id" class="col-md-4 col-form-label">
                 ID
               </label>
               <div class="col-md-8">
-                <input type="number" name="id" class="form-control" id="id">
+                <input type="number" name="id" class="form-control" id="id" value="{{ restaurantsData.id }}">
               </div>
             </div>
 
@@ -21,7 +21,7 @@
                 Restaurant's Name
               </label>
               <div class="col-md-8">
-                <input type="text" name="name" class="form-control" id="name" required>
+                <input type="text" name="name" class="form-control" id="name" value="{{ restaurantsData.name }}" required>
                 <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>
@@ -32,7 +32,7 @@
                 Restaurant's English Name
               </label>
               <div class="col-md-8">
-                <input type="text" name="englishName" class="form-control" id="name-en">
+                <input type="text" name="englishName" class="form-control" id="name-en" value="{{ restaurantsData.name_en }}">
               </div>
             </div>
 
@@ -41,7 +41,7 @@
                 Category
               </label>
               <div class="col-md-8">
-                <input type="text" name="category" class="form-control" id="category">
+                <input type="text" name="category" class="form-control" id="category" value="{{ restaurantsData.category }}">
               </div>
             </div>
 
@@ -50,7 +50,7 @@
                 Image's URL
               </label>
               <div class="col-md-8">
-                <input type="text" name="image" class="form-control" id="image">
+                <input type="text" name="image" class="form-control" id="image" value="{{ restaurantsData.image }}">
               </div>
             </div>
 
@@ -59,7 +59,7 @@
                 Restaurant's Address
               </label>
               <div class="col-md-8">
-                <input type="text" name="location" class="form-control" id="location">
+                <input type="text" name="location" class="form-control" id="location" value="{{ restaurantsData.location }}">
               </div>
             </div>
 
@@ -68,7 +68,7 @@
                 Restaurant's Phone Number
               </label>
               <div class="col-md-8">
-                <input type="text" name="phone" class="form-control" id="phone">
+                <input type="text" name="phone" class="form-control" id="phone" value="{{ restaurantsData.phone }}">
               </div>
             </div>
 
@@ -77,7 +77,7 @@
                 GoogleMap's URL
               </label>
               <div class="col-md-8">
-                <input type="text" name="googleMap" class="form-control" id="google-map">
+                <input type="text" name="googleMap" class="form-control" id="google-map" value="{{ restaurantsData.google_map }}">
               </div>
             </div>
 
@@ -86,7 +86,7 @@
                 Restaurant's Rating
               </label>
               <div class="col-md-8">
-                <input type="number" name="rating" class="form-control" id="rating" min="0" max="5" step="0.1">
+                <input type="number" name="rating" class="form-control" id="rating" min="0" max="5" step="0.1" value="{{ restaurantsData.rating }}">
               </div>
             </div>
 
@@ -95,12 +95,12 @@
                 Description
               </label>
               <div class="col-md-8">
-                <textarea type="text" name="description" class="form-control" id="description"></textarea>
+                <textarea type="text" name="description" class="form-control" id="description">{{ restaurantsData.description }}</textarea>
               </div>
             </div>
 
             <!-- submit button -->
-            <button class="btn btn-success" type="submit">Add</button>
+            <button class="btn btn-success" type="submit">Save</button>
           </form>
         </div>
       </div>
