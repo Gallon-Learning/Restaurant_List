@@ -2,8 +2,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
-// 引用 body-parser
+
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 const Restaurant = require('./models/restaurant')
 
@@ -31,6 +32,7 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 // 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 // routes setting
 // 使用者可以瀏覽全部所有餐廳
@@ -66,18 +68,7 @@ app.get('/restaurants/new', (req, res) => {
 
 app.post('/restaurants', (req, res) => {
   const restaurantNew = req.body
-  return Restaurant.create({
-      'id': restaurantNew.id,
-      'name': restaurantNew.name,
-      'name_en': restaurantNew.englishName,
-      'category': restaurantNew.category,
-      'image': restaurantNew.image,
-      'location': restaurantNew.location,
-      'phone': restaurantNew.phone,
-      'google_map': restaurantNew.googleMap,
-      'rating': restaurantNew.rating,
-      'description': restaurantNew.description
-  })
+  return Restaurant.create(restaurantNew)
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
@@ -100,29 +91,16 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants/:id/edit', (req, res) => {
-  const id = req.params.id
-  const restaurantEdit = req.body
-  return Restaurant.findById(id)
-    .then(restaurant => {
-      restaurant.id = restaurantEdit.id
-      restaurant.name = restaurantEdit.name
-      restaurant.name_en = restaurantEdit.englishName
-      restaurant.category = restaurantEdit.category
-      restaurant.image = restaurantEdit.image
-      restaurant.location = restaurantEdit.location
-      restaurant.phone = restaurantEdit.phone
-      restaurant.google_map = restaurantEdit.googleMap
-      restaurant.rating = restaurantEdit.rating
-      restaurant.description = restaurantEdit.description
-      return restaurant.save()
-    })
-    .then(()=> res.redirect(`/restaurants/${id}`))
-    .catch(error => console.log(error))
+app.put('/restaurants/:id', (req, res) => {
+  const { id } = req.params
+  Restaurant.findByIdAndUpdate(id, req.body)
+    //可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(err => console.log(err))
 })
 
 // 使用者可以刪除一家餐廳
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())

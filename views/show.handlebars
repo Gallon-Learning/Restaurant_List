@@ -5,7 +5,7 @@
     <div class="col-12 col-md-10 mx-auto">
       <div class="d-grid d-sm-flex justify-content-sm-end">
         <a class="btn btn-secondary btn-sm mr-2" role="button" href="/restaurants/{{restaurantsData._id}}/edit">Edit</a>
-        <form action="/restaurants/{{restaurantsData._id}}/delete" method="POST" style="display: inline;">
+        <form action="/restaurants/{{restaurantsData._id}}?_method=DELETE" method="POST" style="display: inline;">
           <button class="btn btn-secondary btn-sm mr-2">Delete</button >
         </form>
       </div>

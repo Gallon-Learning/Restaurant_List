@@ -6,7 +6,7 @@
         <div class="card-body">
           <h5 class="card-title">Edit A Restaurant <i class="fas fa-plus-circle fa-sm"></i></h5>
           <hr>
-          <form method="POST" action="./edit">
+          <form method="POST" action="/restaurants/{{ restaurantsData._id }}?_method=PUT">
             <div class="row mb-3 g-2">
               <label for="id" class="col-md-4 col-form-label">
                 ID
