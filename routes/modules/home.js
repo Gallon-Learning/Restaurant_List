@@ -7,6 +7,7 @@ const Restaurant = require('../../models/restaurant')
 router.get('/', (req, res ) => {
 Restaurant.find()
     .lean()
+    .sort({ name: 'asc' })
     .then((restaurantsData) => res.render('index', {restaurantsData}))
 })
 
@@ -18,6 +19,7 @@ if (!req.query.keyword) {
 const keyword = req.query.keyword.trim()
 Restaurant.find({})
     .lean()
+    .sort({ name: 'asc' })
     .then(restaurantsData => {
     const filterRestaurantsData = restaurantsData.filter(
         data =>
