@@ -1,6 +1,6 @@
 <!-- ./views/index.handlebars -->
 <!-- search bar -->
-<div class="container search-bar">
+<div class="container search-bar sort-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
       <form action="/search">
@@ -13,6 +13,20 @@
         </div>
       </form>
     </div>
+  </div>
+  <div class="sort-bar-outer d-flex justify-content-end">
+    <form>
+      <div class="form-group">
+        <label for="sort">排序方法</label>
+        <select class="form-select" name="sort" id="sort">
+          <option selected>Sort by ...</option>
+          <option value="A-Z">A - Z</option>
+          <option value="Z-A">Z - A</option>
+          <option value="category">類別</option>
+          <option value="area">地區</option>
+        </select>
+      </div>
+    </form>
   </div>
 </div>
 
