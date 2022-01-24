@@ -7,15 +7,6 @@
           <h5 class="card-title">Edit A Restaurant <i class="fas fa-plus-circle fa-sm"></i></h5>
           <hr>
           <form method="POST" action="/restaurants/{{ restaurantsData._id }}?_method=PUT">
-            <div class="row mb-3 g-2">
-              <label for="id" class="col-md-4 col-form-label">
-                ID
-              </label>
-              <div class="col-md-8">
-                <input type="number" name="id" class="form-control" id="id" value="{{ restaurantsData.id }}">
-              </div>
-            </div>
-
             <div class="row g-2 mb-3">
               <label for="name" class="col-md-4 col-form-label">
                 Restaurant's Name
@@ -50,7 +41,7 @@
                 Image's URL
               </label>
               <div class="col-md-8">
-                <input type="text" name="image" class="form-control" id="image" value="{{ restaurantsData.image }}">
+                <input type="url" name="image" class="form-control" id="image" value="{{ restaurantsData.image }}">
               </div>
             </div>
 
@@ -68,7 +59,7 @@
                 Restaurant's Phone Number
               </label>
               <div class="col-md-8">
-                <input type="text" name="phone" class="form-control" id="phone" value="{{ restaurantsData.phone }}">
+                <input type="tel" name="phone" class="form-control" id="phone" value="{{ restaurantsData.phone }}" maxlength="12" pattern="[0-9]{2}\s?[0-9]{3,4}\s?[0-9]{4}">
               </div>
             </div>
 
@@ -77,7 +68,7 @@
                 GoogleMap's URL
               </label>
               <div class="col-md-8">
-                <input type="text" name="googleMap" class="form-control" id="google-map" value="{{ restaurantsData.google_map }}">
+                <input type="url" name="googleMap" class="form-control" id="google-map" value="{{ restaurantsData.google_map }}">
               </div>
             </div>
 

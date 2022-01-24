@@ -38,7 +38,14 @@
         {{#each restaurantsData}}
         <div class="card mb-3">
           <a href="/restaurants/{{this._id}}">
-            <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+            <img class="card-img-top" src="{{this.image}}" alt="Picture URL is wrong" onerror="nofind()">
+            <script type="text/javascript">
+              function nofind() {
+                const img = event.srcElement
+                img.src="https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-hand-drawn-cute-cartoon-burger-with-food-elements-elementlovely-foodcartoon-foodhand-png-image_613521.jpg"; //替換的圖片
+                img.onerror = null //控制不要一直觸發錯誤
+              }
+            </script>
           </a>
           <div class="card-body p-3">
             <h6 class="card-title mb-1">{{this.name}}</h6>
