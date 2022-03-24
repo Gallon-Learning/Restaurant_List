@@ -39,8 +39,14 @@
       <p class="mb-5">
         {{restaurantsData.description}}
       </p>
-
-      <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurantsData.image}}" alt="Picture URL is wrong" style="max-width: 600px;">
+      <script type="text/javascript">
+        function nofind() {
+          const img = event.srcElement
+          img.src="https://png.pngtree.com/png-vector/20190130/ourlarge/pngtree-hand-drawn-cute-cartoon-burger-with-food-elements-elementlovely-foodcartoon-foodhand-png-image_613521.jpg"; //替換的圖片
+          img.onerror = null //控制不要一直觸發錯誤
+        }
+      </script>
+      <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurantsData.image}}" alt="Picture URL is wrong" style="max-width: 600px;" onerror="nofind()">
     </div>
   </div>
 </div>
