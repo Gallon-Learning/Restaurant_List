@@ -23,6 +23,7 @@ app.use(session({
 }))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
 usePassport(app)
 app.use(flash())
 app.use((req, res, next) => {
