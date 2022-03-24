@@ -16,16 +16,23 @@
 
   <header>
     <!-- navigation -->
-    <nav class="navbar navbar-light bg-light">
-      <div class="container justify-content-between">
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <div class="container justify-content-start">
         <a class="navbar-brand" href="/">
-          <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png" width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
+          <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png" width="28" height="28" class="d-inline-block align-top" alt="我的餐廳清單">
           我的餐廳清單
         </a>
         <a class="navbar-brand" href="/restaurants/new">
           <i class="fas fa-plus-circle fa-lg"></i>
           新增餐廳
         </a>
+      </div>
+      <div>
+        {{#if isAuthenticated}}
+          <a href="/users/logout" class="btn btn-info">Logout</a>
+        {{else}}
+          <a href="/users/login" class="btn btn-info">Login</a>
+        {{/if}}
       </div>
     </nav>
 
