@@ -10,7 +10,6 @@ router.get('/', (req, res ) => {
         .lean()
         .sort({ name: 'asc' })
         .then((restaurantsData) => {
-            console.log(restaurantsData)
             res.render('index', {restaurantsData})
         })
 })
