@@ -5,7 +5,7 @@ const Restaurant = require('../../models/restaurant')
 
 // Setting home page routers
 router.get('/new', (req, res) => {
-  res.render("new")
+  res.render('new')
 })
 
 router.post('/', (req, res) => {
@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
 })
 
 // 使用者可以瀏覽一家餐廳的詳細資訊
-router.get('/:id', (req, res ) => {
+router.get('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
   return Restaurant.findById({ _id, userId })
@@ -37,10 +37,9 @@ router.get('/:id/edit', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  const userId = req.user._id
   const _id = req.params.id
   Restaurant.findByIdAndUpdate(_id, req.body)
-    //可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
+    // 可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
     .then(() => res.redirect(`/restaurants/${_id}`))
     .catch(err => console.log(err))
 })
