@@ -1,22 +1,29 @@
+// require packages used in the project
 const express = require('express')
 const router = express.Router()
-const User = require('../../models/user')
 const passport = require('passport')
 const bcrypt = require('bcryptjs')
 
+// require relative js files
+const User = require('../../models/user')
+
+// setting routes
+// login page
 router.get('/login', (req, res) => {
   res.render('login')
 })
+// submitting login page
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/users/login',
   failureFlash: true
 }))
+// register page
 router.get('/register', (req, res) => {
   res.render('register')
 })
+// submitting register page
 router.post('/register', (req, res) => {
-  // 取得註冊表單參數
   const { name, email, password, confirmPassword } = req.body
   const errors = []
   if (!email || !password || !confirmPassword) {
@@ -35,7 +42,7 @@ router.post('/register', (req, res) => {
     })
   }
   User.findOne({ email }).then(user => {
-    // 如果已經註冊：退回原本畫面
+    // if registered, return register page
     if (user) {
       errors.push({ message: '這個 Email 已經註冊過了。' })
       return res.render('register', {
@@ -46,22 +53,25 @@ router.post('/register', (req, res) => {
         confirmPassword
       })
     }
-    // 如果還沒註冊：寫入資料庫
+    // if not registered, write into db
     return bcrypt
-      .genSalt(10) // 產生「鹽」，並設定複雜度係數為 10
-      .then(salt => bcrypt.hash(password, salt)) // 為使用者密碼「加鹽」，產生雜湊值
+      .genSalt(10) // generate salt, setting complicated number 10
+      .then(salt => bcrypt.hash(password, salt)) // add salt into passport, generate hash
       .then(hash => User.create({
         name,
         email,
-        password: hash // 用雜湊值取代原本的使用者密碼
+        password: hash // use hash to replace original passport
       }))
       .then(() => res.redirect('/'))
       .catch(err => console.log(err))
   })
 })
+// logout
 router.get('/logout', (req, res) => {
   req.logout()
   req.flash('success_msg', '你已經成功登出。')
   res.redirect('/users/login')
 })
+
+// export
 module.exports = router

@@ -1,9 +1,17 @@
+// require packages used in the project
 const bcrypt = require('bcryptjs')
+
+// use environment variables
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
+// require relative js files
 const Restaurant = require('../restaurant')
 const User = require('../user')
+const db = require('../../config/mongoose')
+
+// require and set seed data
 const restaurantList = require('../../restaurant.json').results
 const SEED_USERS = [
   {
@@ -17,7 +25,8 @@ const SEED_USERS = [
     password: '12345678'
   }
 ]
-const db = require('../../config/mongoose')
+
+// put seed data into db
 db.once('open', () => {
   const userPromises = []
   SEED_USERS.forEach(function (seedUser) {

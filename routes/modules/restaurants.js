@@ -1,13 +1,16 @@
+// require packages used in the project
 const express = require('express')
 const router = express.Router()
 
+// require relative js files
 const Restaurant = require('../../models/restaurant')
 
-// Setting home page routers
+// setting routes
+// adding new restaurant page
 router.get('/new', (req, res) => {
   res.render('new')
 })
-
+// submitting new restaurant
 router.post('/', (req, res) => {
   const restaurantNew = req.body
   restaurantNew.userId = req.user._id
@@ -15,8 +18,7 @@ router.post('/', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
-
-// 使用者可以瀏覽一家餐廳的詳細資訊
+// view restaurant's detail
 router.get('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
@@ -25,8 +27,7 @@ router.get('/:id', (req, res) => {
     .then((restaurantsData) => res.render('show', { restaurantsData }))
     .catch(error => console.log(error))
 })
-
-// 使用者可以修改一家餐廳的資訊
+// edit page
 router.get('/:id/edit', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
@@ -35,16 +36,14 @@ router.get('/:id/edit', (req, res) => {
     .then((restaurantsData) => res.render('edit', { restaurantsData }))
     .catch(error => console.log(error))
 })
-
+// submitting edit page
 router.put('/:id', (req, res) => {
   const _id = req.params.id
   Restaurant.findByIdAndUpdate(_id, req.body)
-    // 可依照專案發展方向自定編輯後的動作，這邊是導向到瀏覽特定餐廳頁面
     .then(() => res.redirect(`/restaurants/${_id}`))
     .catch(err => console.log(err))
 })
-
-// 使用者可以刪除一家餐廳
+// delete
 router.delete('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
@@ -54,4 +53,5 @@ router.delete('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// export
 module.exports = router

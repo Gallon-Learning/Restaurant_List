@@ -1,9 +1,12 @@
+// require packages used in the project
 const express = require('express')
 const router = express.Router()
 
+// require relative js files
 const Restaurant = require('../../models/restaurant')
 
-// Setting home page routers
+// setting routes
+// home page routers
 router.get('/', (req, res) => {
   const userId = req.user._id
   Restaurant.find({ userId })
@@ -13,8 +16,7 @@ router.get('/', (req, res) => {
       res.render('index', { restaurantsData })
     })
 })
-
-// 使用者可以搜尋餐廳
+// users can search
 router.get('/search', (req, res) => {
   if (!req.query.keyword) {
     return res.redirect('/')
@@ -35,4 +37,5 @@ router.get('/search', (req, res) => {
     .catch(err => console.log(err))
 })
 
+// export
 module.exports = router

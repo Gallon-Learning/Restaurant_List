@@ -1,4 +1,7 @@
+// require packages used in the project
 const mongoose = require('mongoose')
+
+// setting schema and table columns
 const Schema = mongoose.Schema
 const restaurantSchema = new Schema({
   name: {
@@ -35,4 +38,6 @@ const restaurantSchema = new Schema({
     index: true
   }
 })
+
+// export
 module.exports = mongoose.model('Restaurant', restaurantSchema)

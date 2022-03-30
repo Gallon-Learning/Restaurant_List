@@ -1,4 +1,7 @@
+// require packages used in the project
 const mongoose = require('mongoose')
+
+// setting schema and table columns
 const Schema = mongoose.Schema
 const userSchema = new Schema({
   name: {
@@ -17,4 +20,6 @@ const userSchema = new Schema({
     default: Date.now
   }
 })
+
+// export
 module.exports = mongoose.model('User', userSchema)
