@@ -9,7 +9,7 @@
           <form method="POST" action="/restaurants">
             <div class="row g-2 mb-3">
               <label for="name" class="col-md-4 col-form-label">
-                Restaurant's Name
+                Restaurant's Name *
               </label>
               <div class="col-md-8">
                 <input type="text" name="name" class="form-control" id="name" required>
@@ -41,7 +41,7 @@
                 Image's URL
               </label>
               <div class="col-md-8">
-                <input type="url" name="image" class="form-control" id="image">
+                <input type="url" name="image" class="form-control" id="image" placeholder="Enter Image URL">
               </div>
             </div>
 
@@ -69,7 +69,7 @@
                 GoogleMap's URL
               </label>
               <div class="col-md-8">
-                <input type="url" name="google_map" class="form-control" id="google_map">
+                <input type="url" name="google_map" class="form-control" id="google_map" placeholder="Enter Google Map URL">
               </div>
             </div>
 
@@ -78,7 +78,7 @@
                 Restaurant's Rating
               </label>
               <div class="col-md-8">
-                <input type="number" name="rating" class="form-control" id="rating" min="0" max="5" step="0.1">
+                <input type="number" name="rating" class="form-control" id="rating" min="0" max="5" step="0.1" placeholder="0 ~ 5">
               </div>
             </div>
 
