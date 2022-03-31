@@ -62,7 +62,7 @@
               <a class="btn btn-secondary btn-sm mr-2" role="button" href="/restaurants/{{this._id}}/edit">Edit</a>
               <a class="btn btn-secondary btn-sm mr-2" role="button" href="/restaurants/{{this._id}}">Detail</a>
               <form action="./restaurants/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
-                <button class="btn btn-secondary btn-sm mr-2">Delete</button >
+                <button class="btn btn-secondary btn-sm mr-2" onclick="return confirm('Sure to delete?')">Delete</button >
               </form>
             </div>
           </div>
